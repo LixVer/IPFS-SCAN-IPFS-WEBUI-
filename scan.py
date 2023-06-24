@@ -1,5 +1,13 @@
 import requests
 import random
+#查询ip归属地函数
+def iploc(ip):
+    ipsearch = 'http://ip-api.com/json/' + ip + '?lang=zh-CN'
+    getipcountry = requests.get(url = ipsearch).json()['country']
+    getcity = requests.get(url = ipsearch).json()['city']
+    ipinfo = getipcountry + getcity
+    return ipinfo
+
 #设置用户代理
 user_agents = ['Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
                    'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
@@ -34,7 +42,8 @@ for i in req:
                     response.enconding = "utf-8"
                     #返回测试成功的结果
                     if str(response) == '<Response [200]>':
-                        print(ip)
+
+                        print(ip + ':5001/webui' + iploc(ip))
                 except:
                     pass
                 continue
